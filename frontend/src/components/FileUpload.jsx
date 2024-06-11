@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import cloud_upload from '../assets/upload_to_cloud.svg'
 import { FaFileAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
 const FileUpload = () => {
@@ -11,7 +12,6 @@ const FileUpload = () => {
     const [selectedFile, setSelectedFile] = useState(null)
     const [progress, setProgress] = useState(100);
     const [message, setMessage] = useState('')
-    const [loading, setLoading] = useState(false)
 
     // HandleChange function
     const handleChange = (e) => {
@@ -44,46 +44,45 @@ const FileUpload = () => {
 
     // handleUpload Function
     const handleUpload = async () => {
-        if (!selectedFile) return 
-        setLoading(false)
+        if (!selectedFile) return
         let formData = new FormData()
         formData.append('file', selectedFile)
+        const toastId = toast.loading('Uploading File...', {
+            duration: 4000
+        })
         try {
             const response = await axios.post('http://127.0.0.1:8000/qualify_leads', formData, {
                 onUploadProgress: (progressEvent) => {
                     const { load, total } = progressEvent
                     const progressValue = Math.round((load * 100) / total)
                     setProgress(progressValue)
-                    
-                    
+                    toast.loading(`Calculating data.... ${progress}%`, {
+                        id: toastId,
+                    })
                 },
-                
-            })
-            if(response){
-                setSelectedFile(null)
-                setLoading(false)
-            }
+            },
+            )
             console.log(response.data);
-            
+            toast.success('Data fetched successfully', {id: toastId})
+            inputRef.current.value = ""
+            setSelectedFile(null)
+            setProgress(0)
+
 
         } catch (error) {
             console.log('Error while uploading', error);
-        }
-        try {
-            const response = await fetch('http://127.0.0.1:8000/qualify_leads', {
-                method: "POST",
-                body: formData,
+            toast.error('Error while Uploading file', {
+                id: toastId,
+                duration: 2000
             })
-            console.log(response.data);
-        } catch (error) {
-            console.log('Error while uploading', error);
         }
     }
 
 
 
     return (
-        <div className={`bg-white max-h-[450px] min-h-fit  w-[650px] rounded-md text-center flex flex-col items-center shadow-md mt-3 pb-10`}>
+        <div className={`bg-white max-h-[450px] min-h-[100px]  w-[650px] rounded-md text-center flex flex-col items-center shadow-md mt-3 pb-10`}>
+            <Toaster />
             <h2 className='mt-5 text-[35px] font-semibold text-[#26252D]'>Upload File</h2>
             <input ref={inputRef} type="file" onChange={handleChange} style={{ display: 'none' }} />
 
@@ -103,24 +102,22 @@ const FileUpload = () => {
 
             {/* Showing info about the file */}
             {
-                (selectedFile || loading) && (<div className='mb-10'>
+                (selectedFile) && (<div className='mb-10'>
                     <div className='flex  overflow-y-auto justify-center items-center px-5 py-3 rounded-lg gap-x-5 bg-[#F8F7F7] mt-5'>
                         <FaFileAlt className='text-[#3884c2] text-xl' />
                         {/* File Name */}
                         <div className='flex flex-col items-center justify-center gap-x-1'>
                             <h3 className='text-[13px]'>{selectedFile.name}</h3>
-                            <div className='w-full h-[5px] bg-[rgba(0,0,0,0.076)] rounded-[8px] mt-1'>
-                                <div className='w-0 h-[5px] bg-[#3691dc] rounded-[8px] ' style={{ width: `${progress}%` }}></div>
-                            </div>
                         </div>
                         <button onClick={clearSelected} className='rounded-full bg-[#d0e2fe] p-2 text-center'><IoMdClose className='text-[#3378b0]' /></button>
 
                     </div>
-                    <button className='px-3 py-2 mt-6 font-normal text-white bg-blue-500 rounded' onClick={handleUpload}>Upload</button>
+                    <button className='px-3 py-2 mt-10 font-normal text-white bg-blue-500 rounded' onClick={handleUpload}>Upload</button>
                 </div>
 
                 )
             }
+            
         </div>
     )
 }
