@@ -4,9 +4,11 @@ import { FaFileAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const FileUpload = () => {
     const inputRef = useRef()
+    const navigate = useNavigate()
 
     // State variables for tracking file status
     const [selectedFile, setSelectedFile] = useState(null)
@@ -56,18 +58,25 @@ const FileUpload = () => {
                     const { load, total } = progressEvent
                     const progressValue = Math.round((load * 100) / total)
                     setProgress(progressValue)
-                    toast.loading(`Calculating data.... ${progress}%`, {
+                    toast.loading(`Calculating data....`, {
                         id: toastId,
                     })
                 },
             },
             )
             console.log(response.data);
-            toast.success('Data fetched successfully', {id: toastId})
-            inputRef.current.value = ""
-            setSelectedFile(null)
-            setProgress(0)
-
+            setTimeout(() => {
+                toast.success('Data fetched successfully', {
+                    id: toastId,
+                    duration: 2000
+                })
+                setTimeout(() => {
+                    navigate('/display_data')
+                }, 2000)
+            }, 2000)
+            // inputRef.current.value = ""
+            // setSelectedFile(null)
+            // setProgress(0)
 
         } catch (error) {
             console.log('Error while uploading', error);

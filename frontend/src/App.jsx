@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import FileUpload from './components/FileUpload'
+import DisplayData from './pages/DisplayData'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/upload' element={<FileUpload />}/>
+        <Route path='/display_data' element={<DisplayData />}/>
       </Routes>
     </div>
   )
