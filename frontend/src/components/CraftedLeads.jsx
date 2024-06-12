@@ -1,8 +1,12 @@
 import React from 'react'
 
-const CraftedLeads = () => {
+const CraftedLeads = ({data}) => {    
   return (
-    <div></div>
+    <section className='bg-white w-[600px] h-[200px]'>
+        <p>
+            {data.n_rows}
+        </p>
+    </section>
   )
 }
 

@@ -1,20 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import cloud_upload from '../assets/upload_to_cloud.svg'
 import { FaFileAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const FileUpload = () => {
     const inputRef = useRef()
     const navigate = useNavigate()
 
-    // State variables for tracking file status
+    // State state for handling file
     const [selectedFile, setSelectedFile] = useState(null)
-    const [progress, setProgress] = useState(100);
+
+    // State state for messging 
     const [message, setMessage] = useState('')
 
+    // Setting state for data handling
+    const [data, setData] = useState({})
+    // let data = {};
     // HandleChange function
     const handleChange = (e) => {
         const selectedFile = e.target.files[0]
@@ -41,7 +45,7 @@ const FileUpload = () => {
     const clearSelected = () => {
         inputRef.current.value = ""
         setSelectedFile(null)
-        setProgress(0)
+
     }
 
     // handleUpload Function
@@ -54,29 +58,23 @@ const FileUpload = () => {
         })
         try {
             const response = await axios.post('http://127.0.0.1:8000/qualify_leads', formData, {
-                onUploadProgress: (progressEvent) => {
-                    const { load, total } = progressEvent
-                    const progressValue = Math.round((load * 100) / total)
-                    setProgress(progressValue)
+                onUploadProgress: () => {
                     toast.loading(`Calculating data....`, {
                         id: toastId,
                     })
                 },
             },
             )
-            console.log(response.data);
+            setData(response.data.output_data)
             setTimeout(() => {
                 toast.success('Data fetched successfully', {
                     id: toastId,
                     duration: 2000
                 })
                 setTimeout(() => {
-                    navigate('/display_data')
+                    navigate('/display_data', {state: {data: response.data.output_data}})
                 }, 2000)
             }, 2000)
-            // inputRef.current.value = ""
-            // setSelectedFile(null)
-            // setProgress(0)
 
         } catch (error) {
             console.log('Error while uploading', error);
@@ -86,6 +84,7 @@ const FileUpload = () => {
             })
         }
     }
+
 
 
 
@@ -122,11 +121,22 @@ const FileUpload = () => {
 
                     </div>
                     <button className='px-3 py-2 mt-10 font-normal text-white bg-blue-500 rounded' onClick={handleUpload}>Upload</button>
+
                 </div>
 
                 )
             }
-            
+
+            {
+                data && (
+                    <Link to={{
+                        pathname: '/display_data', data: {
+                            data
+                        }
+                    }}></Link>
+                )
+            }
+
         </div>
     )
 }
