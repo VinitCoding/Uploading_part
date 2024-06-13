@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 const DisplayData = () => {
     const location = useLocation()
     const {data} = location.state
-    // console.log('Data has arrived' ,data);
+    console.log('Data has arrived' ,data);
   return (
     <div className='bg-[#AED8FF] w-screen h-screen overflow-auto px-6 border pb-10'>
         <Upload />
@@ -14,7 +14,7 @@ const DisplayData = () => {
         <div className='flex justify-between flex-initial mt-12'>
             {/* Crafted Leads */}
             <div >
-                <h3 className='text-lg font-semibold text-[#1E1D5B]'>Crafted Leads</h3>
+                <h3 className='text-xl font-semibold text-[#1E1D5B]'>Crafted Leads</h3>
                 <CraftedLeads data={data}/>
             </div>
 
