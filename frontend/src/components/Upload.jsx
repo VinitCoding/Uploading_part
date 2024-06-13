@@ -16,6 +16,9 @@ const Upload = () => {
     // Data handling state
     const [data, setData] = useState({})
 
+    // Button enabled or disabled state
+    const [isDisabled, setIsDisabled] = useState(false)
+
     // handleChange function
     const handleChange = (e) => {
         const fileSelected = e.target.files[0]
@@ -30,6 +33,7 @@ const Upload = () => {
             else {
                 setSelectedfile(null)
                 setMessage('Please upload an excel file (.xls, .csv or .xlsx)')
+                setIsDisabled(false)
             }
         }
     }
@@ -42,7 +46,7 @@ const Upload = () => {
     // handleAnalyze function
     const handleAnalyze = async () => {
         if (!selectedFile) return
-
+        setIsDisabled(true)
         const formData = new FormData()
         formData.append('file', selectedFile)
 
@@ -54,7 +58,7 @@ const Upload = () => {
                     toast.loading('Calulating Data...', { id: toastId })
                 }
             })
-
+            setIsDisabled(false)
             setData(response.data.output_data)
             console.log(response);
             setTimeout(() => {
@@ -71,10 +75,11 @@ const Upload = () => {
                 id: toastId,
                 duration: 2000
             })
+            setIsDisabled(true)
         }
     }
 
-    console.log('Updated files data', data);
+    // console.log('Updated files data', data);
 
     // deleteFile function
     const deleteFile = () => {
@@ -103,12 +108,12 @@ const Upload = () => {
                         )
                     }
                     {
-                        !selectedFile && (
+                        !selectedFile || !isDisabled && (
                             <p className='mt-2 text-center text-red-500'>{message}</p>
                         )
                     }
                     <div className='flex justify-center gap-x-20'>
-                        <button disabled={!selectedFile ? false : true} className={`bg-[#1E1D5B] text-white px-4 py-2 rounded-md mt-5 w-fit ${!selectedFile ? 'cursor-pointer' : 'cursor-not-allowed opacity-20'} `} onClick={handleClick}>Upload File</button>
+                        <button disabled={isDisabled} className={`bg-[#1E1D5B] text-white px-4 py-2 rounded-md mt-5 w-fit ${!isDisabled ? 'cursor-pointer' : 'cursor-not-allowed opacity-20'} `} onClick={handleClick}>Upload File</button>
                         <button className='bg-[#1E1D5B] text-white px-4 py-2 rounded-md mt-5 w-fit ' onClick={handleAnalyze}>Analyze</button>
                     </div>
 

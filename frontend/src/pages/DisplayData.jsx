@@ -8,13 +8,13 @@ const DisplayData = () => {
     const {data} = location.state
     // console.log('Data has arrived' ,data);
   return (
-    <div className='bg-[#AED8FF] w-full h-full px-6 border'>
+    <div className='bg-[#AED8FF] w-screen h-screen overflow-auto px-6 border pb-10'>
         <Upload />
 
         <div className='flex justify-between flex-initial mt-12'>
             {/* Crafted Leads */}
             <div >
-                <h3>Crafted Leads</h3>
+                <h3 className='text-lg font-semibold text-[#1E1D5B]'>Crafted Leads</h3>
                 <CraftedLeads data={data}/>
             </div>
 
