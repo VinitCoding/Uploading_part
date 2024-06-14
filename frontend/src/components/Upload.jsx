@@ -3,6 +3,7 @@ import img from '../assets/analyze_img.svg'
 import { CiCircleRemove } from "react-icons/ci";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import CraftedLeads from './CraftedLeads';
 
 const Upload = () => {
     const inputRef = useRef()
@@ -58,14 +59,15 @@ const Upload = () => {
                     toast.loading('Calulating Data...', { id: toastId })
                 }
             })
-            setIsDisabled(false)
+            
             setData(response.data.output_data)
-            console.log(response);
+            
             setTimeout(() => {
                 toast.success('Data fetched Successfully..', {
                     id: toastId,
                     duration: 2000
                 })
+                setIsDisabled(false)
             }, 2000)
             if (response) {
             }
@@ -78,6 +80,8 @@ const Upload = () => {
             setIsDisabled(true)
         }
     }
+
+    // console.log('Data After reuploading', data);
 
     // console.log('Updated files data', data);
 
@@ -108,9 +112,9 @@ const Upload = () => {
                         )
                     }
                     {
-                        !selectedFile || !isDisabled && (
+                        selectedFile && !isDisabled ? (
                             <p className='mt-2 text-center text-red-500'>{message}</p>
-                        )
+                        ) : (null)
                     }
                     <div className='flex justify-center gap-x-20'>
                         <button disabled={isDisabled} className={`bg-[#1E1D5B] text-white px-4 py-2 rounded-md mt-5 w-fit ${!isDisabled ? 'cursor-pointer' : 'cursor-not-allowed opacity-20'} `} onClick={handleClick}>Upload File</button>
@@ -122,6 +126,11 @@ const Upload = () => {
 
                 {/* Image Display */}
                 <img src={img} alt="analyze_image" />
+
+                {/* Sending data to crafted leads
+                <div style={{display: 'none'}}>
+                    <CraftedLeads data={data}/>
+                </div> */}
 
             </div>
         </section>
