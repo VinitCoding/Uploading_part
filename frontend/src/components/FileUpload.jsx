@@ -72,7 +72,11 @@ const FileUpload = () => {
                     duration: 2000
                 })
                 setTimeout(() => {
-                    navigate('/display_data', {state: {data: response.data.output_data}})
+                    if(data){
+                        navigate('/display_data', {state: {data: response.data.output_data}})
+                    }else{
+                        navigate('/')
+                    }
                 }, 2000)
             }, 2000)
 

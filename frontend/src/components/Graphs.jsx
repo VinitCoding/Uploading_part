@@ -1,3 +1,4 @@
+import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import React, { useState } from 'react'
 
 const Graphs = ({ data }) => {
@@ -8,9 +9,11 @@ const Graphs = ({ data }) => {
     const [showdata, setShowData] = useState({})
 
     const handleModal = (number) => {
-        setOpenModal(true)
+        setOpenModal(!openModal)
         setShowData(data.image_list[number])
     }
+
+    const onClose = () => setOpenModal(!openModal)
     return (
         <section className='grid grid-cols-2 mt-3.5 gap-6 '>
 
@@ -23,9 +26,11 @@ const Graphs = ({ data }) => {
             }
             {
                 openModal ? (
-                    <div className=''>
-                        <img src={`data:image/png;base64,${showdata}`} alt="image" />
-                    </div>
+                    <Dialog open={openModal} handler={onClose} className='border-none'>
+                        <DialogBody>
+                            <img src={`data:image/png;base64,${showdata}`} alt="image" />
+                        </DialogBody>
+                    </Dialog>
                 ) : (null)
             }
         </section>
