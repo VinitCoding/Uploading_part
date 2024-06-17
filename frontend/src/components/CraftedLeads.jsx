@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import lead_img from '../assets/lead_img.svg'
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -26,7 +26,7 @@ const CraftedLeads = ({ data }) => {
     setShowPanel(false)
   }
 
-  console.log('Data to be send to showData component', showData);
+  // console.log('Data to be send to showData component', showData);
   // console.log('Lead Number is ', leadNumber);
   return (
     <section className='bg-white max-h-max min-h-[200px] w-[600px] min-w-fit py-4 rounded-lg shadow-md mt-3 grid grid-cols-3 px-2 place-items-center gap-x-4 '>
@@ -48,7 +48,7 @@ const CraftedLeads = ({ data }) => {
                 <li className='px-1 py-2 text-[18px]'><span className='font-semibold'>Residential Status: </span>{showData.Residential_Status}</li>
               </ul>
             </div>
-          ) : (data.n_rows.map((item, index) => (
+          ) : (data && data.n_rows && data.n_rows.map((item, index) => (
             <div key={index} className={`p-2 mt-2 mb-2 text-center rounded-lg cursor-pointer`} style={{
               backgroundColor: bg_colors[index % bg_colors.length]
             }} onClick={() => handleClick(index)}>

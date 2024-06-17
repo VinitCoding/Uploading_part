@@ -4,13 +4,15 @@ import FileUpload from '../components/FileUpload'
 
 const Home = () => {
   return (
-    <section className='flex items-center justify-center pt-10 gap-x-9'>
+    <>
+    <section className='flex items-center justify-center w-full h-full py-8 gap-x-9'>
         <img src={bg_img} alt="image" />
 
         <div>
             <FileUpload />
         </div>
     </section>
+    </>
   )
 }
 

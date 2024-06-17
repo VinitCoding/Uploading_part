@@ -93,7 +93,7 @@ const FileUpload = () => {
 
 
     return (
-        <div className={`bg-white max-h-[450px] min-h-[100px]  w-[650px] rounded-md text-center flex flex-col items-center shadow-md mt-3 pb-10`}>
+        <div className={`bg-white max-h-[450px] min-h-[100px] w-[650px] rounded-md text-center flex flex-col items-center shadow-md pb-10`}>
             <Toaster />
             <h2 className='mt-5 text-[35px] font-semibold text-[#26252D]'>Upload File</h2>
             <input ref={inputRef} type="file" onChange={handleChange} style={{ display: 'none' }} />
