@@ -15,11 +15,11 @@ const DisplayData = () => {
         setUpdatedData(newData)
     }
     return (
-        <div className='bg-[#AED8FF] w-screen h-screen pt-10 overflow-auto px-6 border pb-10'>
+        <div className='bg-[#AED8FF] w-screen h-screen pt-10 overflow-auto px-6 border'>
             {/* Reuploading file system */}
             <Upload />
-
-            <div className='flex justify-center flex-initial mt-12 gap-x-7'>
+            
+            <div className='flex justify-center flex-initial mt-10 gap-x-7'>
                 {/* Crafted Leads */}
                 <div >
                     <h3 className='text-xl font-semibold text-[#1E1D5B]'>Crafted Leads</h3>
@@ -32,6 +32,10 @@ const DisplayData = () => {
                     <Graphs data={data}/>
                 </div>
             </div>
+
+            
+           
+
         </div>
     )
 }

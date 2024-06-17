@@ -29,7 +29,7 @@ const CraftedLeads = ({ data }) => {
   // console.log('Data to be send to showData component', showData);
   // console.log('Lead Number is ', leadNumber);
   return (
-    <section className='bg-white max-h-max min-h-[200px] w-[600px] min-w-fit py-4 rounded-lg shadow-md mt-3 grid grid-cols-3 px-2 place-items-center gap-x-4 '>
+    <section className='bg-white max-h-[500px] overflow-y-scroll min-h-[200px] w-[600px] min-w-fit py-4 rounded-lg shadow-md mt-3 grid grid-cols-3 px-2 place-items-center gap-x-4 '>
         {
           showPanel ? (
             <div className='w-full col-span-3 text-[#1E1D5B] pb-2'>
