@@ -65,6 +65,7 @@ const FileUpload = () => {
                 },
             },
             )
+
             setData(response.data.output_data)
             setTimeout(() => {
                 toast.success('Data fetched successfully', {
