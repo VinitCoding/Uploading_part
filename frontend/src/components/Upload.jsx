@@ -11,7 +11,7 @@ const Upload = () => {
         navigate('/')
     }
     return (
-        <section className='relative'>
+        <section className='relative right-0'>
 
             <Tooltip content = 'Add new file'>
             <button className={`bg-[#1E1D5B] text-white absolute right-0 top-10 p-3 rounded-full hover:animate-pulse  ease-in`} onClick={handleClick}> <FaFileAlt className='text-lg'/> </button>
