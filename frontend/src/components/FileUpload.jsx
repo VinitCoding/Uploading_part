@@ -57,7 +57,7 @@ const FileUpload = () => {
             duration: 4000
         })
         try {
-            const response = await axios.post('http://127.0.0.1:8000/qualify_leads', formData, {
+            const response = await axios.post('http://127.0.0.1:8008/qualify_leads', formData, {
                 onUploadProgress: () => {
                     toast.loading(`Calculating data....`, {
                         id: toastId,
